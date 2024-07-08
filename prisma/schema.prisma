@@ -19,3 +19,11 @@ model Lake {
   turbidity   Float
   location    String   // URL pointing to the location of the lake
 }
+
+
+enum access {
+  HOD
+  TEACHER
+  CR
+  STUDENT
+}
