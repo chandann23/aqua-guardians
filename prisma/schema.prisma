@@ -21,9 +21,27 @@ model Lake {
 }
 
 
-enum access {
-  HOD
-  TEACHER
-  CR
-  STUDENT
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  admin     Admin?
+accessLevel AccessLevel  @default(USER)
+  @@map("users")
+}
+
+model Admin {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("admins")
+}
+
+enum AccessLevel {
+  USER
+  ADMIN
 }

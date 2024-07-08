@@ -58,7 +58,7 @@ export function LakeCard ({ lake }: { lake: Lake }) {
   return (
 <div className="flex flex-wrap justify-center gap-6">
   <Card className="w-80 bg-white shadow-sm rounded-lg overflow-hidden border border-gray-200">
-  <div className="h-12 bg-green-100"></div>
+ { lake.temperature>30 ? <div className="h-12 bg-red-200"></div> : <div className="h-12 bg-green-100"></div> }
   <CardHeader className="p-4">
     <CardTitle className="text-xl font-semibold">{lake.name}</CardTitle>
     <CardDescription className="text-sm text-gray-500">
@@ -71,13 +71,8 @@ export function LakeCard ({ lake }: { lake: Lake }) {
     <p className="text-lg font-bold">TDS <span className="text-sm font-normal text-gray-500">{`:${lake.tds} mg/L`}</span></p>
     <p className="text-lg font-bold">Turbidity <span className="text-sm font-normal text-gray-500">{`:${lake.turbidity} NTU`}</span></p>
     <div className="mt-2 flex space-x-2">
-       {/* <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Free</span>
-      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Shared Quota</span> */}
     </div>
-       {/* <p>pH: {lake.ph}</p>
-        <p>Temperature: {lake.temperature}°C</p>
-     <p>TDS: {lake.tds} mg/L</p>
-     <p>Turbidity: {lake.turbidity} NTU</p> */}
+
   </CardContent>
 </Card>
 </div>
