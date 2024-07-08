@@ -26,28 +26,28 @@ export default function MobileNav() {
       <SheetContent side="left" className="flex flex-col">
         <nav className="grid gap-2 text-lg font-medium">
           <Link
-            href="#"
+            href="/"
             className="flex items-center gap-2 text-lg font-semibold"
           >
             <Droplets className="h-6 w-6" />
             <span className="sr-only">Aqua Guardians</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <Home className="h-5 w-5" />
             Dashboard
           </Link>
           <Link
-            href="#"
+            href="/chat"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
           >
             <Brain className="h-5 w-5" />
             Ask AI
           </Link>
           <Link
-            href="/"
+            href="/lakes"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <Waves className="h-5 w-5" />
