@@ -1,5 +1,4 @@
 "use client"
-
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -24,6 +23,8 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 import { Plus } from "lucide-react"
+import axios from "axios"
+import { useMutation } from "@tanstack/react-query"
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -47,11 +48,19 @@ export function AddLakeDialog() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
+  const { mutate: onSubmit, data: response } = useMutation({
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      const res = await axios.post("/api/lakes", values)
+    },
+    onSuccess: (response) => {
+      console.log(response)
+    }
+  })
+
+  const handleSubmit = form.handleSubmit((data) => {
+    onSubmit(data)
+  })
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -67,15 +76,15 @@ export function AddLakeDialog() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
-                  <FormLabel>Username</FormLabel>
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,10 +94,10 @@ export function AddLakeDialog() {
               control={form.control}
               name="ph"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
-                  <FormLabel>pH</FormLabel>
+                <FormItem>
+                  <FormLabel>PH</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input type="number" step="0.1" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,10 +107,10 @@ export function AddLakeDialog() {
               control={form.control}
               name="temperature"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
+                <FormItem>
                   <FormLabel>Temperature</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input type="number" step="0.1" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,10 +120,10 @@ export function AddLakeDialog() {
               control={form.control}
               name="tds"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
+                <FormItem>
                   <FormLabel>TDS</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input type="number" step="0.1" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -124,10 +133,23 @@ export function AddLakeDialog() {
               control={form.control}
               name="turbidity"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
+                <FormItem>
                   <FormLabel>Turbidity</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input type="number" step="0.1" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,12 +157,15 @@ export function AddLakeDialog() {
             />
           </form>
         </Form>
-        <DialogFooter className="sm:justify-start">
+        <DialogFooter className="flex justify-between items-center">
           <DialogClose asChild>
             <Button type="button" variant="default">
               Close
             </Button>
           </DialogClose>
+          <Button onClick={handleSubmit} type="submit" variant="default">
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
