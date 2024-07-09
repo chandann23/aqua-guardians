@@ -1,122 +1,148 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
-import { Button } from "~/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { useFormState, useFormStatus } from "react-dom";
-import { addLake } from "~/app/actions/addLake";
-import { FormState } from "~/app/types";
+} from "~/components/ui/dialog"
+import { Input } from "~/components/ui/input"
+import { Button } from "~/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form"
+import { Plus } from "lucide-react"
 
-const initialState: FormState = {
-  success: false,
-  errors: {},
-};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" disabled={pending}>
-      {pending ? "Saving..." : "Save changes"}
-    </Button>
-  );
-}
+const formSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  ph: z.number().min(0).max(14).step(0.1),
+  temperature: z.number().step(0.1),
+  tds: z.number().positive().step(0.1),
+  turbidity: z.number().nonnegative().step(0.1),
+  location: z.string().min(1, "Location is required")
+})
 
 export function AddLakeDialog() {
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const [state, formAction] = useFormState(addLake, initialState);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      ph: 0,
+      temperature: 0,
+      tds: 0,
+      turbidity: 0,
+      location: ""
+    },
+  })
 
-  useEffect(() => {
-    if (state.success) {
-      setOpen(false);
-      router.refresh();
-    }
-  }, [state.success, router]);
-
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon" onClick={() => setOpen(true)}>
+        <Button variant="outline" size="sm">
           <Plus className="h-4 w-4 text-black" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form action={formAction}>
-          <DialogHeader>
-            <DialogTitle>Add New Lake</DialogTitle>
-            <DialogDescription>
-              Enter the details of the new lake here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            {state.errors && Object.keys(state.errors).length > 0 && (
-              <div className="text-red-500">
-                {Object.values(state.errors).map((error, index) => (
-                  <p key={index}>{error}</p>
-                ))}
-              </div>
-            )}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" name="name" className="col-span-3" required />
-              {state.errors?.name && <div className="col-start-2 col-span-3 text-red-500">{state.errors.name}</div>}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="ph" className="text-right">
-                pH
-              </Label>
-              <Input id="ph" name="ph" type="number" step="0.1" className="col-span-3" required />
-              {state.errors?.ph && <div className="col-start-2 col-span-3 text-red-500">{state.errors.ph}</div>}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="temperature" className="text-right">
-                Temperature
-              </Label>
-              <Input id="temperature" name="temperature" type="number" step="0.1" className="col-span-3" required />
-              {state.errors?.temperature && <div className="col-start-2 col-span-3 text-red-500">{state.errors.temperature}</div>}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="tds" className="text-right">
-                TDS
-              </Label>
-              <Input id="tds" name="tds" type="number" step="0.1" className="col-span-3" required />
-              {state.errors?.tds && <div className="col-start-2 col-span-3 text-red-500">{state.errors.tds}</div>}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="turbidity" className="text-right">
-                Turbidity
-              </Label>
-              <Input id="turbidity" name="turbidity" type="number" step="0.1" className="col-span-3" required />
-              {state.errors?.turbidity && <div className="col-start-2 col-span-3 text-red-500">{state.errors.turbidity}</div>}
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="location" className="text-right">
-                Location
-              </Label>
-              <Input id="location" name="location" className="col-span-3" required />
-              {state.errors?.location && <div className="col-start-2 col-span-3 text-red-500">{state.errors.location}</div>}
-            </div>
-          </div>
-          <DialogFooter>
-            <SubmitButton />
-          </DialogFooter>
-        </form>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Add New Lake</DialogTitle>
+          <DialogDescription>
+            Enter the details of the new lake here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-4">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ph"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-4">
+                  <FormLabel>pH</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="temperature"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-4">
+                  <FormLabel>Temperature</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tds"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-4">
+                  <FormLabel>TDS</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="turbidity"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-4">
+                  <FormLabel>Turbidity</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="default">
+              Close
+            </Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
