@@ -54,6 +54,8 @@ export function AddLakeDialog() {
     },
     onSuccess: (response) => {
       console.log(response)
+      form.reset() 
+
     }
   })
 
@@ -163,9 +165,12 @@ export function AddLakeDialog() {
               Close
             </Button>
           </DialogClose>
+          <DialogClose asChild>
           <Button onClick={handleSubmit} type="submit" variant="default">
             Save
+
           </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
