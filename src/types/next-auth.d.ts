@@ -1,20 +1,18 @@
-import NextAuth from "next-auth";
-import { access } from "@prisma/client";
+
+import type { AccessLevel } from "@prisma/client";
+import type { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
-  interface User {
-    name: string;
-    usn: string;
-    access: access;
-    email: string
-  }
   interface Session {
-    user: {
-      name: string;
-      usn: string;
-      access: access
+    user: DefaultSession["user"] & {
       id: string;
-      email: string
+      access: AccessLevel;
     };
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    access?: AccessLevel;
   }
 }

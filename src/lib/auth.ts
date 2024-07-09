@@ -1,8 +1,8 @@
-import { NextAuthOptions, getServerSession } from "next-auth";
+import { type NextAuthOptions, getServerSession } from "next-auth";
 import { db } from "./db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
-import { AccessLevel } from "@prisma/client";
+import { type AccessLevel } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -24,9 +24,9 @@ export const authOptions: NextAuthOptions = {
         session.user = {
           ...session.user,
           id: token.id as string,
-          name: token.name as string,
-          access: token.access as AccessLevel,
-          email: token.email as string,
+          name: token.name!,
+          access: token.access!,
+          email: token.email!,
         };
       }
       return session;
@@ -35,23 +35,20 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         const dbUser = await db.user.findFirst({
           where: {
-            email: user.email,
+            email: user.email!,
           },
         });
-
         if (!dbUser) {
-          token.id = user!.id;
+          token.id = user.id;
           return token;
         }
-
         if (dbUser) {
-          token.id = user.id;
-          token.name = user.name;
-          token.access = user.access;
-          token.email = user.email
+          token.id = dbUser.id;
+          token.name = dbUser.name;
+          token.access = dbUser.accessLevel;
+          token.email = dbUser.email;
         }
       }
-
       return token;
     },
     redirect() {
@@ -61,4 +58,3 @@ export const authOptions: NextAuthOptions = {
 };
 
 export const getAuthSession = () => getServerSession(authOptions);
-

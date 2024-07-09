@@ -5,6 +5,8 @@ import { type Metadata } from "next";
 
 import TopNav from "./_components/Top-Nav";
 import { Toaster } from "~/components/ui/toaster";
+import Sidebar from "./dashboard/_components/Side-Bar";
+import AllProviders from "~/components/AllProviders";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,11 +21,17 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
 
       <body className="flex flex-col ">
-        <div className="w-full">
+        <AllProviders>
           <TopNav />
           <Toaster />
-        </div>
-        {children}</body>
+          <div className="flex">
+            <Sidebar />
+            <div className="flex-1 overflow-auto h-screen w-full">
+              {children}
+            </div>
+          </div>
+        </AllProviders>
+      </body>
 
 
     </html>

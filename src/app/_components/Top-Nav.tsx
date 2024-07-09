@@ -1,6 +1,6 @@
 import { Droplets } from "lucide-react";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 
 export default function TopNav() {
   return (
@@ -11,9 +11,9 @@ export default function TopNav() {
           Aqua Guardians
         </div></Link>
       <div className="flex flex-row gap-4">
-        <Button>
+        <Link href="/sign-in" className={buttonVariants({ variant: "outline" })}>
           SIgn In
-        </Button>
+        </Link>
       </div>
 
     </nav>
