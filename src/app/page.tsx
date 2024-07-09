@@ -42,7 +42,7 @@ export default function HomePage() {
         priority
       />
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
-        <Button asChild variant="default">
+        <Button variant="default">
           <Link href="/dashboard" className="text-white">Dashboard</Link>
         </Button>
       </div>
