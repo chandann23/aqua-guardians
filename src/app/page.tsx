@@ -27,7 +27,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 
 export default function HomePage() {
 
@@ -42,9 +43,7 @@ export default function HomePage() {
         priority
       />
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
-        <Button variant="default">
-          <Link href="/dashboard" className="text-white">Dashboard</Link>
-        </Button>
+          <Link href="/dashboard" className={cn(`text-white mb-64`, buttonVariants({variant : "default"}))} >Dashboard</Link>
       </div>
     </div>
   );

@@ -9,3 +9,11 @@ export interface FormState {
     location?: string;
   };
 }
+
+
+ export interface LakeData {
+  ph: number;
+  temperature: number;
+  tds: number;
+  turbidity: number;
+}

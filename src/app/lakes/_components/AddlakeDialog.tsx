@@ -1,11 +1,9 @@
-// /app/components/AddLakeDialog.tsx
+"use client";
 
-"use client"
-
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Plus } from "lucide-react"
-import { Button } from "~/components/ui/button"
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
+import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,40 +12,39 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
-import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
-import { useFormState, useFormStatus } from "react-dom"
-import { addLake } from "~/app/actions/addLake"
-import { FormState } from "~/app/types"
-
+} from "~/components/ui/dialog";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { useFormState, useFormStatus } from "react-dom";
+import { addLake } from "~/app/actions/addLake";
+import { FormState } from "~/app/types";
 
 const initialState: FormState = {
   success: false,
-  errors: {}
-}
+  errors: {},
+};
 
 function SubmitButton() {
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
 
   return (
     <Button type="submit" disabled={pending}>
       {pending ? "Saving..." : "Save changes"}
     </Button>
-  )
+  );
 }
 
 export function AddLakeDialog() {
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
-  const [state, formAction] = useFormState(addLake, initialState)
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const [state, formAction] = useFormState(addLake, initialState);
 
   useEffect(() => {
     if (state.success) {
-      setOpen(false)
-      router.refresh()
+      setOpen(false);
+      router.refresh();
     }
-  }, [state.success, router])
+  }, [state.success, router]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -121,5 +118,5 @@ export function AddLakeDialog() {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

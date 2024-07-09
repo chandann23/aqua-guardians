@@ -1,6 +1,4 @@
-// /app/actions/addLake.ts
-
-"use server"
+"use server";
 
 import { FormState } from '~/app/types';
 
@@ -79,8 +77,8 @@ export async function addLake(prevState: FormState, formData: FormData): Promise
     return {
       success: false,
       errors: {
-        name: "Failed to add lake. Please try again."
-      }
+        name: "Failed to add lake. Please try again.",
+      },
     };
   }
 }
