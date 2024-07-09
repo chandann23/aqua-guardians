@@ -1,13 +1,4 @@
-// Assuming you have some sample data or fetching logic
-// const sampleLakes = [
-//   { id: 1, name: "Lake Superior", location: "North America", ph: 7.2, temperature: 4.2, tds: 63, turbidity: 0.5 },
-//   { id: 2, name: "Lake Victoria", location: "Africa", ph: 8.1, temperature: 25.6, tds: 97, turbidity: 1.8 },
-//   { id: 3, name: "Lake Baikal", location: "Russia", ph: 7.9, temperature: 3.8, tds: 96, turbidity: 0.8 },
-//   { id: 4, name: "Lake Superior", location: "North America", ph: 7.2, temperature: 4.2, tds: 63, turbidity: 0.5 },
-//   { id: 5, name: "Lake Victoria", location: "Africa", ph: 8.1, temperature: 25.6, tds: 97, turbidity: 1.8 },
-//   { id: 6, name: "Lake Baikal", location: "Russia", ph: 7.9, temperature: 3.8, tds: 96, turbidity: 0.8 },
-// ];
-"use client"
+"use client"  
 import Link from "next/link";
 import { LakeCardGrid } from "./_components/LakeCardGrid";
 import { AddLakeDialog } from "./_components/AddlakeDialog";
@@ -24,7 +15,10 @@ export default function LakesPage() {
     queryFn: async () => {
       const res = await axios.get("/api/lakes")
       return res.data as Lake[]
-    }
+    },
+    staleTime : 2000,
+    refetchInterval: 2000,
+    refetchIntervalInBackground: true,
   })
 
   return (

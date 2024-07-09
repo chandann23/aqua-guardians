@@ -25,6 +25,7 @@ import {
 import { Plus } from "lucide-react"
 import axios from "axios"
 import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -36,6 +37,7 @@ const formSchema = z.object({
 })
 
 export function AddLakeDialog() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,12 +52,12 @@ export function AddLakeDialog() {
 
   const { mutate: onSubmit, data: response } = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) => {
-      const res = await axios.post("/api/lakes", values)
+      return await axios.post("/api/lakes", values)
     },
     onSuccess: (response) => {
       console.log(response)
-      form.reset() 
-
+      router.refresh()
+      form.reset() // Reset the form here
     }
   })
 
@@ -166,10 +168,9 @@ export function AddLakeDialog() {
             </Button>
           </DialogClose>
           <DialogClose asChild>
-          <Button onClick={handleSubmit} type="submit" variant="default">
-            Save
-
-          </Button>
+            <Button type="submit"  onClick={handleSubmit} variant="default">
+              Save
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
