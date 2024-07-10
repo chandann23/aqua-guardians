@@ -1,11 +1,12 @@
 // import Image from "next/image";
+// 
 // import Link from "next/link";
 // import { Button } from "~/components/ui/button";
 
 // export default function HomePage() {
 //   return (
 //     <div className="relative h-screen w-full">
-      {/* <video
+{/* <video
         autoPlay
         loop
         muted
@@ -14,7 +15,7 @@
         <source src="/aqua-guardians.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video> */}
-      {/* <Image src="/aqua-guardian.png" alt="Aqua Guardians" width={1000} height={1000} />
+{/* <Image src="/aqua-guardian.png" alt="Aqua Guardians" width={1000} height={1000} />
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
         <Button asChild className="mt-16">
           <Link href="/dashboard">Dashboard</Link>
@@ -43,7 +44,7 @@ export default function HomePage() {
         priority
       />
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
-          <Link href="/dashboard" className={cn(`text-white mb-64`, buttonVariants({variant : "default"}))} >Dashboard</Link>
+        <Link href="/dashboard" className={cn(`text-white mb-64`, buttonVariants({ variant: "default" }))} >Dashboard</Link>
       </div>
     </div>
   );

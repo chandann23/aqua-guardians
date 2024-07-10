@@ -41,6 +41,9 @@
 import React from 'react';
 import { Button } from "~/components/ui/button"
  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { EditLakeDialog } from './EditLakeDialog';
+import { Brain } from 'lucide-react';
+import Link from 'next/link';
 
 
 
@@ -70,7 +73,11 @@ export function LakeCard ({ lake }: { lake: Lake }) {
     <p className="text-lg font-bold">Temperature <span className="text-sm font-normal text-gray-500">{`:${lake.temperature}°C `}</span></p>
     <p className="text-lg font-bold">TDS <span className="text-sm font-normal text-gray-500">{`:${lake.tds} mg/L`}</span></p>
     <p className="text-lg font-bold">Turbidity <span className="text-sm font-normal text-gray-500">{`:${lake.turbidity} NTU`}</span></p>
-    <div className="mt-2 flex space-x-2">
+    <div className="mt-2 flex space-x-2 justify-between">
+     <EditLakeDialog lake={lake} />
+     <Link href="/chat" className='mt-3'>
+     <Brain />
+     </Link>
     </div>
 
   </CardContent>
