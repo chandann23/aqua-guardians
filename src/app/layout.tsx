@@ -5,8 +5,8 @@ import { type Metadata } from "next";
 
 import TopNav from "./_components/Top-Nav";
 import { Toaster } from "~/components/ui/toaster";
-import Sidebar from "./dashboard/_components/Side-Bar";
 import AllProviders from "~/components/AllProviders";
+import Sidebar from "./dashboard/_components/Side-Bar";
 
 export const metadata: Metadata = {
   title: "Create T3 App",

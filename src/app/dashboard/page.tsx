@@ -1,8 +1,7 @@
 import React from 'react'
-import MobileNav from './_components/Mobile-Nav'
-import Sidebar from './_components/Side-Bar'
 import { getAuthSession } from '~/lib/auth'
 import { AccessLevel } from '@prisma/client'
+import MobileNav from './_components/Mobile-Nav'
 
 
 const page = async () => {
