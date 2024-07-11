@@ -22,6 +22,7 @@ type Lake = {
   temperature: number
   tds: number
   turbidity: number
+  locationUrl: string
 }
 
 export function LakeCardGrid({ lakes }: { lakes: Lake[] }) {

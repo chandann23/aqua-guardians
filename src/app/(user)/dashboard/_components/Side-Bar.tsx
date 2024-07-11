@@ -3,7 +3,6 @@ import {
   Brain,
   CircleHelp,
   Home,
-  Users,
   Waves,
 } from "lucide-react";
 import Link from "next/link";

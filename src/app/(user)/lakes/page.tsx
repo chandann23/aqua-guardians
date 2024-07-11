@@ -1,8 +1,6 @@
 "use client"
-import Link from "next/link";
 import { LakeCardGrid } from "./_components/LakeCardGrid";
 import { AddLakeDialog } from "./_components/AddlakeDialog";
-import { buttonVariants } from "~/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import type { Lake } from "@prisma/client";

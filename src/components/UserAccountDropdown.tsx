@@ -1,5 +1,5 @@
 "use client"
-import { User } from 'next-auth'
+import { type User } from 'next-auth'
 import React from 'react'
 
 
@@ -10,15 +10,15 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import UserAvatar from './UserAvatar'
 
 type Props = {
-  user : Pick<User, "name" | "image" | "email">
+  user: Pick<User, "name" | "image" | "email">
 }
 
-const UserAccountDropdown = ({user}: Props) => {
+const UserAccountDropdown = ({ user }: Props) => {
   return (
-<DropdownMenu>
+    <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar
-          user={{ name: user.name || null, image: user.image || null }}
+          user={{ name: user.name ?? null, image: user.image ?? null }}
           className='h-8 w-8'
         />
       </DropdownMenuTrigger>
@@ -42,6 +42,8 @@ const UserAccountDropdown = ({user}: Props) => {
             event.preventDefault()
             signOut({
               callbackUrl: `${window.location.origin}/sign-in`,
+            }).catch((error) => {
+              console.error(error)
             })
           }}>
           Sign out

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
   try {
-    const body = await req.json() as { name: string, ph: number, temperature: number, tds: number, turbidity: number, location: string };
+    const body = await req.json() as { name: string, ph: number, temperature: number, tds: number, turbidity: number, location: string, locationUrl: string };
     const dbUser = await db.user.findFirst({
       where: { email: user.email! }
     });

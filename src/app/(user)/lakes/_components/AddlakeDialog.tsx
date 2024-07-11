@@ -74,7 +74,7 @@ export function AddLakeDialog() {
           <Plus className="h-4 w-4 text-black" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Lake</DialogTitle>
           <DialogDescription>

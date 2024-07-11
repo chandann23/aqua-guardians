@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { continueConversation } from '~/app/actions';
 import { readStreamableValue } from 'ai/rsc';
 import { Send, User, Bot } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -27,18 +28,55 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const debounceRef = useRef<number | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = window.setTimeout(() => {
+      const query = searchParams.toString();
+      if (query) {
+        const initialMessage = `Tell me if this lake is suitable for aquatic life and other activities: ${query}`;
+        handleInitialMessage(initialMessage).catch(console.error);
+      }
+    }, 500); // Adjust the debounce delay as needed
+  }, [searchParams]);
+
+  const handleInitialMessage = async (message: string) => {
+    setIsLoading(true);
+    setShowIntro(false);
+    const newMessages: CoreMessage[] = [
+      { content: message, role: 'user' },
+    ];
+    setMessages(newMessages);
+    const result = await continueConversation(newMessages);
+    for await (const content of readStreamableValue(result.message)) {
+      setMessages([
+        ...newMessages,
+        {
+          role: 'assistant',
+          content: content!.toString(),
+        },
+      ]);
+    }
+    setIsLoading(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     setIsLoading(true);
-    setShowIntro(false); // Hide the intro paragraph
+    setShowIntro(false);
     const newMessages: CoreMessage[] = [
       ...messages,
       { content: input, role: 'user' },
@@ -51,7 +89,7 @@ export default function Chat() {
         ...newMessages,
         {
           role: 'assistant',
-          content: content as string,
+          content: content!.toString(),
         },
       ]);
     }
@@ -59,7 +97,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+     <div className="flex flex-col h-screen bg-gray-100">
       <header className="bg-white shadow-sm p-4">
         <h1 className="text-2xl font-bold text-center text-gray-800">Ask AquaBOT</h1>
       </header>
@@ -71,7 +109,12 @@ export default function Chat() {
         )}
         <div className="space-y-4">
           {messages.map((m, i) => (
-            <div key={i} className={`flex items-start space-x-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              key={i}
+              className={`flex items-start space-x-2 ${
+                m.role === 'user' ? 'justify-end' : 'justify-start'
+              }`}
+            >
               {m.role === 'assistant' && (
                 <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
                   <Bot className="w-5 h-5 text-gray-600" />
@@ -79,8 +122,10 @@ export default function Chat() {
               )}
               <div
                 className={`p-3 rounded-lg ${
-                  m.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
-                } max-w-[70%]`}
+                  m.role === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-black'
+                } max-w-[70%] break-words`}
               >
                 <p className="whitespace-pre-wrap">{m.content as string}</p>
               </div>

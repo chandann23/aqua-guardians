@@ -21,6 +21,7 @@ export const addLake = async ({ name, ph, temperature, tds, turbidity, location 
   const lake = await db.lake.create({
     data: {
       name,
+      locationUrl: location,
       ph,
       temperature,
       tds,

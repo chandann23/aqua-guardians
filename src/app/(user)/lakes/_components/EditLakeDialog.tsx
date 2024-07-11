@@ -89,11 +89,11 @@ export function EditLakeDialog({ lake }: EditLakeDialogProps) {
           <Edit className="h-4 w-4 text-black" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Lake</DialogTitle>
           <DialogDescription>
-            Edit the details of the lake here. Click save when you're done.
+            Edit the details of the lake here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
