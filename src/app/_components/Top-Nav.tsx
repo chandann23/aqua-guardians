@@ -1,5 +1,6 @@
-import { Droplets } from "lucide-react";
+import { Droplets, User } from "lucide-react";
 import Link from "next/link";
+import UserAccountDropdown from "~/components/UserAccountDropdown";
 import { buttonVariants } from "~/components/ui/button";
 import { getAuthSession } from "~/lib/auth";
 
@@ -15,10 +16,8 @@ const TopNav = async () => {
         </div>
       </Link>
       <div className="flex flex-row gap-4 mr-6">
-        {session?.user?.id ? (
-          <Link href="/dashboard" className={buttonVariants({ variant: "default" })}>
-           Dashboard
-          </Link>
+        {session?.user ? (
+          <UserAccountDropdown user={session.user} />
         ) : (
           <Link href="/sign-in" className={buttonVariants({ variant: "outline" })}>
             Sign In
@@ -30,4 +29,5 @@ const TopNav = async () => {
 };
 
 export default TopNav;
+
 

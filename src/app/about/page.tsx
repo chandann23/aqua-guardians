@@ -43,12 +43,12 @@ const Aboutpage = () => {
     <p className="text-gray-700 mb-4">
       Whether you're a concerned citizen, a researcher, or a policymaker, your involvement is crucial in our mission to safeguard our water resources. Explore our data, participate in our community initiatives, or reach out to learn how you can contribute to lake water quality monitoring in your area.
     </p>
-     <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4" asChild>
-<Link href="/login">
+     <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4" >
+<Link href="/sign-in">
   Get Involved
 </Link>
     </Button>
-    <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" asChild>
+    <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" >
 <Link href="/dashboard">
   Go to Dashboard
 </Link>

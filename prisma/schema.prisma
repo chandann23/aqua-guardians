@@ -61,6 +61,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accessLevel   AccessLevel @default(USER)
 
+
   lakes    Lake[]
   accounts Account[]
   sessions Session[]

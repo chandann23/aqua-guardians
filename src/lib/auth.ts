@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
           name: token.name!,
           access: token.access!,
           email: token.email!,
+          image: token.picture
         };
       }
       return session;
@@ -47,6 +48,7 @@ export const authOptions: NextAuthOptions = {
           token.name = dbUser.name;
           token.access = dbUser.accessLevel;
           token.email = dbUser.email;
+          token.picture = dbUser.image;
         }
       }
       return token;

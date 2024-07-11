@@ -53,13 +53,7 @@ export default function MobileNav() {
             <Waves className="h-5 w-5" />
             Lakes
           </Link>
-          <Link
-            href="/customers"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Users className="h-5 w-5" />
-            Customers
-          </Link>
+
           <Link
             href="#"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
