@@ -26,7 +26,7 @@ export default function Sidebar() {
                 { "bg-muted text-primary": pathname === "/" }
               )}
             >
-              <Home className="h-4 w-4" />
+              <Home className="h-6 w-6" />
               Home
             </Link>
             <Link
@@ -36,7 +36,7 @@ export default function Sidebar() {
                 { "bg-muted text-primary": pathname === "/chat" }
               )}
             >
-              <Brain className="h-4 w-4" />
+              <Brain className="h-6 w-6" />
               Ask AI
             </Link>
             <Link
@@ -46,7 +46,7 @@ export default function Sidebar() {
                 { "bg-muted text-primary": pathname === "/lakes" }
               )}
             >
-              <Waves className="h-4 w-4" />
+              <Waves className="h-6 w-6" />
               Lakes
             </Link>
             <Link
@@ -56,7 +56,7 @@ export default function Sidebar() {
                 { "bg-muted text-primary": pathname === "/about" }
               )}
             >
-              <CircleHelp className="h-4 w-4" />
+              <CircleHelp className="h-6 w-6" />
               About Us
             </Link>
           </nav>

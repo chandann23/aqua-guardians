@@ -40,17 +40,16 @@
 
 import React from 'react';
 import { Button } from "~/components/ui/button"
- import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { EditLakeDialog } from './EditLakeDialog';
-import { Brain } from 'lucide-react';
+import { Brain, MapPin } from 'lucide-react';
 import Link from 'next/link';
-
-
 
 type Lake = {
   id: number
   name: string
   location: string
+  locationUrl: string  // New property for the location URL
   ph: number
   temperature: number
   tds: number
@@ -59,30 +58,41 @@ type Lake = {
 
 export function LakeCard ({ lake }: { lake: Lake }) {
   return (
-<div className="flex flex-wrap justify-center gap-6">
-  <Card className="w-80 bg-white shadow-sm rounded-lg overflow-hidden border border-gray-200">
- { lake.temperature>30 ? <div className="h-12 bg-red-200"></div> : <div className="h-12 bg-green-100"></div> }
-  <CardHeader className="p-4">
-    <CardTitle className="text-xl font-semibold">{lake.name}</CardTitle>
-    <CardDescription className="text-sm text-gray-500">
-      {lake.location || "No URL specified"}
-    </CardDescription>
-  </CardHeader>
-  <CardContent className="p-4">
-    <p className="text-lg font-bold">pH <span className="text-sm font-normal text-gray-500">{`:${lake.ph}`}</span></p>
-    <p className="text-lg font-bold">Temperature <span className="text-sm font-normal text-gray-500">{`:${lake.temperature}°C `}</span></p>
-    <p className="text-lg font-bold">TDS <span className="text-sm font-normal text-gray-500">{`:${lake.tds} mg/L`}</span></p>
-    <p className="text-lg font-bold">Turbidity <span className="text-sm font-normal text-gray-500">{`:${lake.turbidity} NTU`}</span></p>
-    <div className="mt-2 flex space-x-2 justify-between">
-     <EditLakeDialog lake={lake} />
-     <Link href="/chat" className='mt-3'>
-     <Brain />
-     </Link>
+    <div className="flex flex-wrap justify-center gap-6">
+      <Card className="w-80 bg-white shadow-sm rounded-lg overflow-hidden border border-gray-200">
+        { lake.ph<6.5 || lake.ph>8.5 || lake.tds>1000 || lake.turbidity >5 ? <div className="h-12 bg-red-200"></div> : <div className="h-12 bg-green-100"></div> }
+        <CardHeader className="p-4">
+          <CardTitle className="text-xl font-semibold">{lake.name}</CardTitle>
+          <CardDescription className="text-sm text-gray-500 flex items-center">
+            <MapPin className="w-4 h-4 mr-1" />
+            {lake.locationUrl ? (
+              <a
+                href={lake.locationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-500 underline"
+              >
+                {lake.location || "View Location"}
+              </a>
+            ) : (
+              lake.location || "No location specified"
+            )}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-4">
+          <p className="text-lg font-bold">pH <span className="text-sm font-normal text-gray-500">{`:${lake.ph}`}</span></p>
+          <p className="text-lg font-bold">Temperature <span className="text-sm font-normal text-gray-500">{`:${lake.temperature}°C `}</span></p>
+          <p className="text-lg font-bold">TDS <span className="text-sm font-normal text-gray-500">{`:${lake.tds} mg/L`}</span></p>
+          <p className="text-lg font-bold">Turbidity <span className="text-sm font-normal text-gray-500">{`:${lake.turbidity} NTU`}</span></p>
+          <div className="mt-2 flex space-x-2 justify-between">
+            <EditLakeDialog lake={lake} />
+            <Link href="/chat" className='mt-3'>
+              <Brain />
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-
-  </CardContent>
-</Card>
-</div>
   );
 }
 

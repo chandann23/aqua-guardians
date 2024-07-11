@@ -33,7 +33,8 @@ const formSchema = z.object({
   temperature: z.number().step(0.1),
   tds: z.number().positive().step(0.1),
   turbidity: z.number().nonnegative().step(0.1),
-  location: z.string().min(1, "Location is required")
+  location: z.string().min(1, "Location is required"),
+  locationUrl: z.string().url("Must be a valid URL").or(z.literal(""))
 })
 
 type Lake = z.infer<typeof formSchema> & { id: number }
@@ -52,7 +53,8 @@ export function EditLakeDialog({ lake }: EditLakeDialogProps) {
       temperature: lake.temperature,
       tds: lake.tds,
       turbidity: lake.turbidity,
-      location: lake.location
+      location: lake.location,
+      locationUrl: lake.locationUrl || ""
     },
   })
 
@@ -169,6 +171,19 @@ export function EditLakeDialog({ lake }: EditLakeDialogProps) {
                   <FormLabel>Location</FormLabel>
                   <FormControl>
                     <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="locationUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="url" placeholder="https://..." />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -47,6 +47,7 @@ model Lake {
   location    String // URL pointing to the location of the lake
   endangered  Boolean
   userId      String
+  locationUrl String // URL pointing to the location of the lake
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

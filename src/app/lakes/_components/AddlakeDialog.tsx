@@ -33,7 +33,8 @@ const formSchema = z.object({
   temperature: z.number().step(0.1),
   tds: z.number().positive().step(0.1),
   turbidity: z.number().nonnegative().step(0.1),
-  location: z.string().min(1, "Location is required")
+  location: z.string().min(1, "Location is required"),
+  locationUrl: z.string().url("Must be a valid URL").or(z.literal("")) // Allow empty string or valid URL
 })
 
 export function AddLakeDialog() {
@@ -46,7 +47,8 @@ export function AddLakeDialog() {
       temperature: 0,
       tds: 0,
       turbidity: 0,
-      location: ""
+      location: "",
+      locationUrl: ""
     },
   })
 
@@ -159,6 +161,19 @@ export function AddLakeDialog() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="locationUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="url" placeholder="https://..." />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
         <DialogFooter className="flex justify-between items-center">
@@ -168,7 +183,7 @@ export function AddLakeDialog() {
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button type="submit"  onClick={handleSubmit} variant="default">
+            <Button type="submit" onClick={handleSubmit} variant="default">
               Save
             </Button>
           </DialogClose>
