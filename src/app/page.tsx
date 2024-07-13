@@ -1,5 +1,5 @@
 // import Image from "next/image";
-// 
+//
 // import Link from "next/link";
 // import { Button } from "~/components/ui/button";
 
@@ -31,6 +31,7 @@
  * @see https://v0.dev/t/Iho4qXfx21e
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+
 import Link from "next/link"
 import { Input } from "~/components/ui/input"
 import { Button } from "~/components/ui/button"
@@ -84,7 +85,7 @@ export default function Component() {
                     Get Started
                   </Link>
                   <Link
-                    href="#"
+                    href="/about"
                     className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                     prefetch={false}
                   >
@@ -202,6 +203,17 @@ export default function Component() {
                   Terms &amp; Conditions
                 </Link>
               </p>
+              <div className="flex justify-center space-x-4 mt-4">
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <TwitterIcon className="h-6 w-6" />
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <WhatsAppIcon className="h-6 w-6" />
+                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground">
+                  <InstagramIcon className="h-6 w-6" />
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -221,7 +233,8 @@ export default function Component() {
   )
 }
 
-function DropletIcon(props : LucideProps) {
+
+function DropletIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -240,8 +253,7 @@ function DropletIcon(props : LucideProps) {
   )
 }
 
-
-function LeafIcon(props : LucideProps) {
+function LeafIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -261,8 +273,7 @@ function LeafIcon(props : LucideProps) {
   )
 }
 
-
-function MessageCircleIcon(props : LucideProps) {
+function MessageCircleIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -281,8 +292,7 @@ function MessageCircleIcon(props : LucideProps) {
   )
 }
 
-
-function TractorIcon(props : LucideProps) {
+function TractorIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -308,9 +318,7 @@ function TractorIcon(props : LucideProps) {
     </svg>
   )
 }
-
-
-function WavesIcon(props : LucideProps) {
+function WavesIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -331,8 +339,7 @@ function WavesIcon(props : LucideProps) {
   )
 }
 
-
-function XIcon(props : LucideProps) {
+function XIcon(props: LucideProps) {
   return (
     <svg
       {...props}
@@ -352,3 +359,61 @@ function XIcon(props : LucideProps) {
   )
 }
 
+function TwitterIcon(props: LucideProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+    </svg>
+  )
+}
+
+function WhatsAppIcon(props: LucideProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z" />
+      <path d="M20.5 3.49A12 12 0 0 0 12 0 12 12 0 0 0 1.5 17.857L0 24l6.143-1.5A12 12 0 0 0 12 24a12 12 0 0 0 12-12c0-3.205-1.248-6.219-3.5-8.51z" />
+    </svg>
+  )
+}
+
+function InstagramIcon(props: LucideProps) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  )}

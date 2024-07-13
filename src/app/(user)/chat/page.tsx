@@ -46,7 +46,7 @@ export default function Chat() {
     debounceRef.current = window.setTimeout(() => {
       const query = searchParams.toString();
       if (query) {
-        const initialMessage = `Tell me if this lake is suitable for aquatic life and other activities: ${query}`;
+        const initialMessage = `Tell me if this lake is suitable for aquatic life and other activities and if it is polluted: ${query}`;
         handleInitialMessage(initialMessage).catch(console.error);
       }
     }, 500); // Adjust the debounce delay as needed
